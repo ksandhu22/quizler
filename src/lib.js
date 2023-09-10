@@ -1,15 +1,20 @@
 import fs from 'fs'
 
-export const chooseRandom = () => {
+export const chooseRandom = (array, numItems) => {
   // TODO implement chooseRandom
   //takes an array and an integer and creates a new array of size integer
   // and returns a randomly populated array of original array elements
+  if(array.length == 0 || array.length == 1){
+    return array;
+  }
+
+  if(numItems < 1 || numItems > array.length){
+    numItems = Math.random() * (array.length - 1) + 1;
+  }
 
 
-  const shuffled = (array,numItems) =>[...array].sort(() => 0.5 - Math.random());
-
-  return shuffled.slice(0, numItems);
-
+   return [...array].sort(() => 0.5 - Math.random()).slice(0, numItems);
+  
   //const getRandomItem = (array,numItems) => array.get([...array.keys()][Math.floor(Math.random() * numItems)])
   //const getRandomItem = (array,numItems) => [...array][Math.floor(Math.random()*numItems)]
 }
