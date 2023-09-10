@@ -43,9 +43,28 @@ export const createPrompt = ({ numQuestions = 1, numChoices = 2 } = {}) => {
   })
 }
 
-export const createQuestions = () => {
-  //Going in the wrong direction have to go back and restart
+export const createQuestions = (questions = {}) => {
+  let questionObjectKeys = Object.keys(questions)
 
+  let questionsElements = {}
+
+  questionObjectKeys.forEach(element => {
+    if (!element.includes('choice')) {
+      questionsElements[element] = {
+        type: 'list',
+        name: element,
+        message: questions[element],
+        choices: []
+      }
+    } else {
+      let stringSplit = 'question-' + element.split('-')[1]
+      let tempObj = questionsElements[stringSplit]
+      tempObj['choices'].push(questions[element])
+    }
+    return Object.values(questionsElements)
+  })
+
+  return Object.values(questionsElements)
 }
 
 export const readFile = path =>
